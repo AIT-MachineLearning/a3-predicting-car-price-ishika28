@@ -1,4 +1,6 @@
 import dash
+import mlflow
+import os
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import pickle
@@ -6,6 +8,18 @@ import pandas as pd
 import numpy as np
 
 app = dash.Dash(__name__)
+
+
+
+#Set mlflow tracking uri
+mlflow.set_tracking_uri("https://mlflow.ml.brain.cs.ait.ac.th/")
+os.environ["MLFLOW_TRACKING_USERNAME"] = "admin"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "password"
+model_name = "st125024-a3-model"
+model_version = 1
+
+# loading the models
+model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{model_version}")
 
 app.layout = html.Div(
     id='form-container',
@@ -109,7 +123,7 @@ app.layout = html.Div(
 
 def prediction(engine: float, mileage: float, km_driven: float ,year: float) -> float:
     try:
-        model = pickle.load(open('car_prediction.model', 'rb'))
+        # model = pickle.load(open('car_prediction.model', 'rb'))
         data = np.array([[engine, mileage, km_driven, year]])
         prediction = np.exp(model.predict(data))
         return prediction[0]  # Accessing the first element
@@ -118,7 +132,7 @@ def prediction(engine: float, mileage: float, km_driven: float ,year: float) -> 
 
 def getDefaultValue():
     try:
-        df = pd.read_csv("./data/Cars.csv")
+        df = pd.read_csv("../data/Cars.csv")
         df['owner'] = df['owner'].map({
             "First Owner": 1,
             "Second Owner": 2,
@@ -141,6 +155,16 @@ def getDefaultValue():
         return median_year, median_engine, mean_mileage, median_km_driven
     except Exception as e:
         raise ValueError(f"Error in processing data: {str(e)}")
+    
+def get_X(user_engine, user_mileage,user_km_driven, user_year):
+    default_year, default_engine, default_mileage , default_km_driven = getDefaultValue()
+            
+    user_year = user_year if user_year else default_year
+    user_engine = user_engine if user_engine else default_engine
+    user_mileage = user_mileage if user_mileage else default_mileage
+    user_km_driven = user_km_driven if user_km_driven else default_km_driven
+
+    return user_engine, user_mileage, user_km_driven, user_year
 
 @app.callback(
     Output('output-predict', 'children'),
@@ -150,19 +174,22 @@ def getDefaultValue():
      State('km_driven', 'value'),
      State('year', 'value')]
 )
-
 def update_output(n_clicks, user_engine, user_mileage,user_km_driven, user_year):
+
+    prediction_label = {
+        0: "Cheap",
+        1: "Affordable",
+        2: "Expensive",
+        3: "Very Expensive"
+    }
     try:
         if n_clicks > 0:
-            default_year, default_engine, default_mileage , default_km_driven = getDefaultValue()
-            
-            user_year = user_year if user_year else default_year
-            user_engine = user_engine if user_engine else default_engine
-            user_mileage = user_mileage if user_mileage else default_mileage
-            user_km_driven = user_km_driven if user_km_driven else default_km_driven
+  
+            user_engine, user_mileage, user_km_driven, user_year = get_X(user_engine, user_mileage,user_km_driven, user_year)
             
             pred_val = prediction(float(user_engine), float(user_mileage),float(user_km_driven), float(user_year))
-            return f" Predicted Price: {pred_val:.2f}"
+            print(f"Predicted Price: {user_engine, user_mileage, user_km_driven, user_year}")
+            return f" Predicted Price: {prediction_label[pred_val]}"
     except Exception as e:
         return f"Error in prediction: {str(e)}"
     
