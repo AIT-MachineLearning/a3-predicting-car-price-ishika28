@@ -126,13 +126,13 @@ def prediction(engine: float, mileage: float, km_driven: float ,year: float) -> 
         # model = pickle.load(open('car_prediction.model', 'rb'))
         data = np.array([[engine, mileage, km_driven, year]])
         prediction = np.exp(model.predict(data))
-        return prediction[0]  # Accessing the first element
+        return prediction  # Accessing the first element
     except Exception as e:
         raise ValueError(f"Prediction error: {str(e)}")
 
 def getDefaultValue():
     try:
-        df = pd.read_csv("../data/Cars.csv")
+        df = pd.read_csv(os.path.join(os.getcwd(), "App/Cars.csv"))
         df['owner'] = df['owner'].map({
             "First Owner": 1,
             "Second Owner": 2,
@@ -188,8 +188,8 @@ def update_output(n_clicks, user_engine, user_mileage,user_km_driven, user_year)
             user_engine, user_mileage, user_km_driven, user_year = get_X(user_engine, user_mileage,user_km_driven, user_year)
             
             pred_val = prediction(float(user_engine), float(user_mileage),float(user_km_driven), float(user_year))
-            print(f"Predicted Price: {user_engine, user_mileage, user_km_driven, user_year}")
-            return f" Predicted Price: {prediction_label[pred_val]}"
+            
+            return f" Predicted Price: {prediction_label[pred_val[0]]}"
     except Exception as e:
         return f"Error in prediction: {str(e)}"
     

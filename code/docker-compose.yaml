@@ -1,0 +1,18 @@
+version: '2.1'
+
+services:
+  prediction_app_car:
+    container_name: car-pred-app
+    command: python3 App/app.py
+    image: ishika2055/prediction_app:A3
+    platform: linux/x86_64 
+    build:
+        context: .
+        dockerfile: Dockerfile
+    environment:
+      - HOST=0.0.0.0
+      - PORT=80
+    ports:
+       - 4000:80
+    volumes:
+      - ./App:/App
