@@ -64,5 +64,5 @@ jobs:
           proxy_key: ${{ secrets.PROXY_KEY }}
           script: |
             docker pull ishika2055/prediction_v3:latest
-            docker compose -f st125287/docker-compose.yaml down --remove-orphans
-            docker compose -f st125287/docker-compose.yaml up -d
+            docker compose -f st125024/docker-compose.yaml down --remove-orphans
+            docker compose -f st125024/docker-compose.yaml up -d
