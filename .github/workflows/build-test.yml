@@ -13,7 +13,7 @@ jobs:
 
     steps:
       # Checkout the code
-      - name: Checkout code
+      - name: Checkout App
         uses: actions/checkout@v3
 
       # Set up Docker
@@ -34,7 +34,7 @@ jobs:
     
     steps:
       # Checkout the code
-      - name: Checkout code
+      - name: Checkout App
         uses: actions/checkout@v3
       # Log in to DockerHub
       - name: Log in to DockerHub
