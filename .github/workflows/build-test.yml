@@ -22,12 +22,7 @@ jobs:
 
       # Build the Docker image for testing
       - name: Build Docker image for testing
-        run: docker buildx build --platform linux/amd64 -t prediction_v3:latest -f code/Dockerfile code
-
-
- # Ensure the image is built before running tests
-      - name: List Docker images
-        run: docker images
+        run: docker build -t prediction_v3 -f code/Dockerfile 
 
       # Run tests inside the Docker container
       - name: Run tests in Docker
@@ -49,7 +44,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       # Build the Docker image for the app
       - name: Build Docker image
-        run: docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/prediction_v3:latest -f code/Dockerfile code
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/prediction_v3:latest -f code/Dockerfile code
       # Push the image to DockerHub
       - name: Push Docker image to DockerHub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/prediction_v3:latest
