@@ -22,7 +22,12 @@ jobs:
 
       # Build the Docker image for testing
       - name: Build Docker image for testing
-        run: docker buildx build --platform linux/amd64 -t prediction_v3 -f code/Dockerfile code
+        run: docker buildx build --platform linux/amd64 -t prediction_v3:latest -f code/Dockerfile code
+
+
+ # Ensure the image is built before running tests
+      - name: List Docker images
+        run: docker images
 
       # Run tests inside the Docker container
       - name: Run tests in Docker
