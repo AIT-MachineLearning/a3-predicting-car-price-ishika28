@@ -24,6 +24,7 @@ jobs:
       - name: Build Docker image for testing
         run: docker build -t prediction_v3 -f code/Dockerfile 
 
+
       # Run tests inside the Docker container
       - name: Run tests in Docker
         run: docker run prediction_v3 pytest
