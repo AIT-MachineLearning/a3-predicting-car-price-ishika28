@@ -42,7 +42,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # Build the Docker image for the app
+      # Build the Docker image for the apps
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/prediction_v3:latest -f code/Dockerfile App
       # Push the image to DockerHub
