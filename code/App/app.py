@@ -132,7 +132,7 @@ def prediction(engine: float, mileage: float, km_driven: float ,year: float) -> 
 
 def getDefaultValue():
     try:
-        df = pd.read_csv(os.path.join(os.getcwd(), "App/Cars.csv"))
+        df = pd.read_csv(os.path.join(os.getcwd(), "code/App/Cars.csv"))
         df['owner'] = df['owner'].map({
             "First Owner": 1,
             "Second Owner": 2,
