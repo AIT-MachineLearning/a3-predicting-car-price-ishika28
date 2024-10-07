@@ -22,7 +22,7 @@ jobs:
 
       # Build the Docker image for testing
       - name: Build Docker image for testing
-        run: docker build -t prediction_v3 -f code/Dockerfile code
+        run: docker build -t prediction_v3 -f code/Dockerfile App
 
       # Run tests inside the Docker container
       - name: Run tests in Docker
@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       # Build the Docker image for the app
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/prediction_v3:latest -f code/Dockerfile code
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/prediction_v3:latest -f code/Dockerfile App
       # Push the image to DockerHub
       - name: Push Docker image to DockerHub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/prediction_v3:latest
