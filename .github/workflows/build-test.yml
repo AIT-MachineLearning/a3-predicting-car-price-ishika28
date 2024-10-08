@@ -69,4 +69,4 @@ jobs:
             docker compose -f st125024/docker-compose.yaml down --remove-orphans
             docker compose -f st12024/docker-compose.yaml up -d
 
-#end of file ser
+#end of file
