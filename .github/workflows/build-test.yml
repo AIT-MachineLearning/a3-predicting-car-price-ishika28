@@ -58,9 +58,11 @@ jobs:
         with:
           host: ${{ vars.HOST }}
           username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           proxy_host: ${{ vars.PROXY_HOST }}
           proxy_username: ${{ secrets.USERNAME }}
+          proxy_password: ${{ secrets.PASSWORD }}
           proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull ishika2055/prediction_app_a3:latest
