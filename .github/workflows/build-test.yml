@@ -65,6 +65,6 @@ jobs:
           script: |
             docker pull ishika2055/prediction_app_a3:latest
             docker compose -f st125024/docker-compose.yaml down --remove-orphans
-            docker compose -f st12024/docker-compose.yaml up -d
+            docker compose -f st125024/docker-compose.yaml up -d
 
 #end of file
