@@ -58,12 +58,10 @@ jobs:
         with:
           host: ${{ vars.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }} #priv key update
           proxy_host: ${{ vars.PROXY_HOST }}
-          proxy_username: ${{ secrets.USERNAME }}
-          proxy_password: ${{ secrets.PASSWORD }}
-          proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          proxy_username: ${{ secrets.USERNAME }} #all docker composed down
+          proxy_key: ${{ secrets.SSH_PRIVATE_KEY }} #trying again for the docker compose
           script: |
             docker pull ishika2055/prediction_app_a3:latest
             docker compose -f st125024/docker-compose.yaml down --remove-orphans
