@@ -67,6 +67,9 @@ jobs:
           proxy_key: ${{  secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull ishika2055/prediction_app_a3:latest
-            docker compose -f st125024/st125024/docker-compose.yaml down --remove-orphans
-            docker compose -f st125024/st125024/docker-compose.yaml up -d
+            cd /home/st125024/st125024
+            docker compose -f docker-compose.yaml down --remove-orphans
+            docker compose -f docker-compose.yaml up -d
+
+            
 
