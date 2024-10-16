@@ -24,6 +24,10 @@ jobs:
       - name: Build Docker image for testing
         run: docker build -t prediction_app_a3 -f code/Dockerfile code
 
+      - name: start docker compose 
+        run: |
+          docker-compose up  dash -d
+          docker compose ps
       # Run tests inside the Docker container
       - name: Run tests in Docker
         run: docker run prediction_app_a3 pytest
@@ -66,10 +70,10 @@ jobs:
           proxy_password: ${{ secrets.PROXY_PASSWORD }}
           proxy_key: ${{  secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull ishika2055/prediction_app_a3:latest
+            docker pull ishika2055/prediction_app_a3:latest 
             cd /home/st125024/st125024
-            docker compose -f docker-compose.yaml down --remove-orphans
-            docker compose -f docker-compose.yaml up -d
+            tag=${{ github.ref_name }} && docker compose -f docker-compose.yaml down --remove-orphans
+            tag=${{ github.ref_name }} && docker compose -f docker-compose.yaml up -d
 
-            
+
 
