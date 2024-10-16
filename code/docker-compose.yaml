@@ -11,8 +11,8 @@ services:
         dockerfile: Dockerfile
     environment:
       - HOST=0.0.0.0
-      - PORT=80
-    ports:
-       - 4000:80
+      - PORT=8050
+    # ports:
+    #    - 4000:80
     volumes:
       - ./App:/App
