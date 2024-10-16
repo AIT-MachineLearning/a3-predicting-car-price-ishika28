@@ -24,10 +24,7 @@ jobs:
       - name: Build Docker image for testing
         run: docker build -t prediction_app_a3 -f code/Dockerfile code
 
-      - name: start docker compose 
-        run: |
-          docker compose up  dash -d
-          docker compose ps
+
       # Run tests inside the Docker container
       - name: Run tests in Docker
         run: docker run prediction_app_a3 pytest
