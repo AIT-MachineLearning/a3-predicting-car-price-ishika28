@@ -16,7 +16,7 @@ RUN pip3 install dash[testing]
 RUN pip3 install pytest
 RUN pip3 install pytest-depends
 
-Expose 8050
+EXPOSE 8050
 # add mlflow
 RUN pip3 install mlflow
 
