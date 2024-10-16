@@ -1,6 +1,7 @@
 version: '2.1'
 
 services:
+dash:
   prediction_app_car:
     container_name: car-pred-app
     command: python3 App/app.py
